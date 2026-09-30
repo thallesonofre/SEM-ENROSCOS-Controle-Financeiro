@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sem Enroscos - CF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#070b18;
+  --line:rgba(255,255,255,.09);
+  --txt:#e9edf9;
+  --txt-2:#9aa5c4;
+  --txt-3:#6b7699;
+  --brand:#7c5cff;
+  --need:#38bdf8;
+  --life:#f472b6;
+  --future:#34d399;
+  --ok:#22c55e;
+  --warn:#fbbf24;
+  --bad:#f43f5e;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--txt);min-height:100vh;
+  padding:24px 16px 64px;-webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 8% -8%, rgba(124,92,255,.30), transparent 60%),
+    radial-gradient(800px 520px at 100% 4%, rgba(34,211,238,.16), transparent 55%),
+    radial-gradient(700px 500px at 50% 112%, rgba(244,114,182,.12), transparent 60%);
+}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+
+/* ============ HEADER ============ */
+.top{display:flex;align-items:center;gap:14px;padding:4px}
+.logo{
+  width:48px;height:48px;flex:0 0 48px;border-radius:15px;display:grid;place-items:center;font-size:23px;
+  background:linear-gradient(135deg,#7c5cff,#22d3ee);
+  box-shadow:0 12px 32px -12px rgba(124,92,255,.95);
+}
+.top-txt h1{font-size:20px;font-weight:800;letter-spacing:-.4px;line-height:1.15}
+.top-txt p{font-size:12.5px;color:var(--txt-2);margin-top:3px}
+.top-txt strong{color:#c4b5fd;font-weight:700}
+.top-actions{margin-left:auto;display:flex;gap:8px}
+
+/* ============ BOTÕES ============ */
+.btn{
+  border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--txt);
+  padding:9px 13px;border-radius:11px;font-size:12.5px;font-weight:600;cursor:pointer;
+  font-family:inherit;transition:.18s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.btn:hover{background:rgba(255,255,255,.1);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.danger:hover{background:rgba(244,63,94,.18);border-color:rgba(244,63,94,.5);color:#ffb3c1}
+.btn.small{padding:7px 12px;font-size:12px;margin-left:auto;
+  background:linear-gradient(135deg,rgba(124,92,255,.35),rgba(34,211,238,.25));
+  border-color:rgba(124,92,255,.45)}
+.btn.small:hover{background:linear-gradient(135deg,rgba(124,92,255,.55),rgba(34,211,238,.4))}
+
+/* ============ CARDS ============ */
+.card{
+  background:linear-gradient(160deg,rgba(255,255,255,.062),rgba(255,255,255,.022));
+  border:1px solid var(--line);border-radius:18px;padding:20px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 20px 44px -26px rgba(0,0,0,.9);
+}
+.card-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.card-head h2{font-size:14.5px;font-weight:700;letter-spacing:-.2px}
+.hint{
+  margin-left:auto;font-size:11px;color:var(--txt-3);background:rgba(255,255,255,.05);
+  padding:4px 10px;border-radius:99px;border:1px solid var(--line);white-space:nowrap;
+}
+
+/* ============ SALÁRIO ============ */
+.salary{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.salary-label span{display:block;font-size:13.5px;font-weight:700}
+.salary-label small{color:var(--txt-3);font-size:11.5px;display:block;margin-top:2px}
+.salary-input{
+  margin-left:auto;display:flex;align-items:center;gap:8px;min-width:290px;
+  background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:15px;padding:9px 16px;transition:.18s;
+}
+.salary-input span{color:var(--txt-2);font-weight:700;font-size:15px}
+.salary-input input{
+  background:none;border:0;outline:0;color:#fff;font-family:inherit;
+  font-size:24px;font-weight:800;width:100%;text-align:right;letter-spacing:-.6px;
+}
+.salary-input:focus-within{border-color:rgba(124,92,255,.75);box-shadow:0 0 0 4px rgba(124,92,255,.15)}
+
+/* ============ KPIs ============ */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:16px;padding:15px 17px;position:relative;overflow:hidden;
+}
+.kpi::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c,#7c5cff)}
+.k-l{font-size:11px;color:var(--txt-2);font-weight:700;text-transform:uppercase;letter-spacing:.7px}
+.k-v{font-size:21px;font-weight:800;margin-top:6px;letter-spacing:-.7px;word-break:break-word}
+.k-s{font-size:11.5px;color:var(--txt-3);margin-top:4px}
+
+/* ============ REGRA 50-30-20 ============ */
+.regra{display:flex;flex-direction:column;gap:20px}
+.ri-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ri-name{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+.ri-vals{margin-left:auto;text-align:right}
+.ri-vals strong{font-size:14px;font-weight:800}
+.ri-meta{display:block;font-size:10.5px;color:var(--txt-3);margin-top:1px}
+.ri-bar{position:relative;height:9px;border-radius:99px;background:rgba(255,255,255,.07);margin-top:11px}
+.ri-bar i{display:block;height:100%;border-radius:99px;transition:width .45s ease,background .3s}
+.ri-tick{position:absolute;top:-4px;width:2px;height:17px;border-radius:2px;background:rgba(255,255,255,.5);transition:left .3s}
+.ri-foot{display:flex;align-items:center;gap:8px;margin-top:9px}
+.ri-pct{font-size:11px;color:var(--txt-2);font-weight:600}
+
+/* ============ BADGES ============ */
+.badge{margin-left:auto;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.badge.ok{background:rgba(34,197,94,.15);color:#6ee7a8}
+.badge.warn{background:rgba(251,191,36,.15);color:#fcd34d}
+.badge.bad{background:rgba(244,63,94,.16);color:#fda4af}
+
+/* ============ GRID PRINCIPAL ============ */
+.grid-main{display:grid;grid-template-columns:1.55fr 1fr;gap:18px;align-items:start}
+
+/* ============ LISTA DE GASTOS ============ */
+.lista{display:flex;flex-direction:column;gap:4px;max-height:600px;overflow-y:auto;padding-right:6px}
+.lista::-webkit-scrollbar{width:7px}
+.lista::-webkit-scrollbar-track{background:transparent}
+.lista::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:99px}
+.lista::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.22)}
+
+.exp{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;border:1px solid transparent;transition:.16s}
+.exp:hover{background:rgba(255,255,255,.04);border-color:var(--line)}
+.exp-ic{
+  width:38px;height:38px;flex:0 0 38px;border-radius:12px;display:grid;place-items:center;
+  font-size:17px;background:rgba(255,255,255,.06);border:1px solid var(--line);
+}
+.exp-info{flex:1 1 auto;min-width:0}
+.exp-name{
+  background:none;border:0;outline:0;color:var(--txt);font-family:inherit;font-size:13.5px;
+  font-weight:600;width:100%;padding:2px 4px;border-radius:7px;transition:.15s;
+}
+.exp-name:hover{background:rgba(255,255,255,.05)}
+.exp-name:focus{background:rgba(124,92,255,.15);box-shadow:inset 0 0 0 1px rgba(124,92,255,.55)}
+.exp-sub{display:flex;align-items:center;gap:8px;margin-top:4px;padding-left:4px}
+.chip{
+  appearance:none;-webkit-appearance:none;border:0;font-family:inherit;font-size:10.5px;font-weight:700;
+  padding:3px 20px 3px 9px;border-radius:99px;cursor:pointer;letter-spacing:.2px;outline:0;
+  background-repeat:no-repeat;background-position:right 7px center;background-size:8px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%23ffffff' stroke-opacity='.5' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  transition:.15s;
+}
+.chip:hover{filter:brightness(1.25)}
+.chip[data-grupo="necessidades"]{background-color:rgba(56,189,248,.16);color:#7dd3fc}
+.chip[data-grupo="estilo"]{background-color:rgba(244,114,182,.16);color:#f9a8d4}
+.chip[data-grupo="futuro"]{background-color:rgba(52,211,153,.16);color:#6ee7b7}
+.chip option{background:#151b33;color:#e9edf9;font-weight:500}
+.exp-pct{font-size:10.5px;color:var(--txt-3);font-weight:700}
+.exp-bar{height:4px;border-radius:99px;background:rgba(255,255,255,.07);margin-top:7px;margin-left:4px;overflow:hidden}
+.exp-bar i{display:block;height:100%;border-radius:99px;transition:width .4s ease,background .3s}
+.exp-val{flex:0 0 134px;display:flex;align-items:center;gap:5px;justify-content:flex-end}
+.money{
+  width:100%;background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:10px;
+  padding:8px 10px;text-align:right;color:#fff;font-family:inherit;font-size:13px;
+  font-weight:700;outline:0;transition:.16s;
+}
+.money::placeholder{color:#4c5678;font-weight:500}
+.money:focus{border-color:rgba(124,92,255,.75);box-shadow:0 0 0 3px rgba(124,92,255,.15);background:rgba(0,0,0,.42)}
+.del{
+  width:24px;height:24px;flex:0 0 24px;border-radius:8px;border:0;background:transparent;
+  color:var(--txt-3);cursor:pointer;font-size:12px;opacity:0;transition:.16s;font-family:inherit;
+}
+.exp:hover .del{opacity:1}
+.del:hover{background:rgba(244,63,94,.22);color:#fda4af}
+
+/* ============ DONUT ============ */
+.donut-wrap{display:flex;flex-direction:column;align-items:center;gap:20px}
+.donut{
+  width:196px;height:196px;border-radius:50%;position:relative;flex:0 0 auto;
+  background:conic-gradient(rgba(255,255,255,.07) 0 100%);
+  transition:background .45s ease;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05),0 24px 48px -26px #000;
+}
+.donut-hole{
+  position:absolute;inset:26px;border-radius:50%;background:#0b1120;
+  display:grid;place-content:center;text-align:center;gap:1px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
+}
+.dh-label{font-size:9.5px;color:var(--txt-3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.donut-hole strong{font-size:16px;font-weight:800;letter-spacing:-.5px}
+.dh-sub{font-size:10.5px;color:var(--txt-2);font-weight:600}
+.legend{width:100%;display:flex;flex-direction:column;gap:10px;list-style:none}
+.legend li{display:flex;align-items:center;gap:9px;font-size:12.5px}
+.dot{width:9px;height:9px;border-radius:3px;flex:0 0 9px}
+.legend .l-val{margin-left:auto;font-weight:700;font-size:12px}
+.legend .l-pct{color:var(--txt-3);font-size:11px;min-width:46px;text-align:right;font-weight:600}
+
+/* ============ SAÚDE FINANCEIRA ============ */
+.health{
+  display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:14px;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);margin-bottom:16px;
+}
+.h-v{font-size:23px;font-weight:800;letter-spacing:-1px;min-width:66px}
+.h-v small{font-size:11px;color:var(--txt-3);font-weight:600;letter-spacing:0}
+.h-bar{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.h-bar i{display:block;height:100%;border-radius:99px;transition:width .5s ease,background .3s}
+.h-t{font-size:10.5px;color:var(--txt-3);font-weight:700;text-transform:uppercase;letter-spacing:.6px;line-height:1.3;text-align:right}
+
+/* ============ ALERTAS ============ */
+.alerts{display:flex;flex-direction:column;gap:10px}
+.alert{display:flex;gap:13px;padding:13px 16px;border-radius:14px;border:1px solid;align-items:flex-start;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.alert.bad{background:rgba(244,63,94,.09);border-color:rgba(244,63,94,.3)}
+.alert.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.28)}
+.alert.ok{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.28)}
+.alert.info{background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.26)}
+.al-ic{font-size:17px;line-height:1.25;flex:0 0 auto}
+.al-t{font-size:13px;font-weight:700}
+.al-x{font-size:12.2px;color:var(--txt-2);margin-top:3px;line-height:1.55}
+
+/* ============ FOOTER / TOAST ============ */
+.foot{text-align:center;font-size:11.5px;color:var(--txt-3);padding:8px 0}
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,80px);
+  background:#151c33;border:1px solid var(--line);color:var(--txt);
+  padding:12px 20px;border-radius:13px;font-size:13px;font-weight:600;
+  box-shadow:0 18px 40px -14px #000;opacity:0;pointer-events:none;transition:.3s cubic-bezier(.2,.9,.3,1.2);z-index:99;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{border-color:rgba(244,63,94,.55);color:#fda4af}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width:900px){
+  .grid-main{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  body{padding:16px 12px 48px}
+  .card{padding:16px;border-radius:16px}
+  .top-actions .btn span{display:none}
+  .logo{width:42px;height:42px;flex-basis:42px;font-size:20px;border-radius:13px}
+  .top-txt h1{font-size:17px}
+  .top-txt p{font-size:11px}
+  .salary-input{min-width:100%;margin-left:0}
+  .salary-input input{font-size:21px}
+  .exp-val{flex:0 0 106px}
+  .money{font-size:12px;padding:7px 8px}
+  .exp-ic{width:34px;height:34px;flex-basis:34px;font-size:15px;border-radius:10px}
+  .exp{gap:9px;padding:9px 8px}
+  .k-v{font-size:18px}
+  .donut{width:172px;height:172px}
+  .health{flex-wrap:wrap;gap:10px}
+  .h-bar{flex:1 1 100%;order:3}
+}
+@media (hover:none){.del{opacity:1}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ===== HEADER ===== -->
+  <header class="top">
+    <div class="logo">💰</div>
+    <div class="top-txt">
+      <h1>SEM ENROSCOS Controle de Finanças</h1>
+      <p>Análise inteligente do seu orçamento pela regra <strong>50 · 30 · 20</strong></p>
+    </div>
+    <div class="top-actions">
+      <button class="btn" id="btnExport" title="Exportar dados em JSON">⬇<span> Exportar</span></button>
+      <button class="btn" id="btnImport" title="Importar dados de um JSON">⬆<span> Importar</span></button>
+      <button class="btn danger" id="btnReset" title="Limpar todos os dados">🗑</button>
+      <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    </div>
+  </header>
+
+  <!-- ===== SALÁRIO ===== -->
+  <section class="card salary">
+    <div class="salary-label">
+      <span>Salário líquido mensal</span>
+      <small>Valor base para todos os cálculos</small>
+    </div>
+    <div class="salary-input">
+      <span>R$</span>
+      <input id="salario" type="text" inputmode="numeric" placeholder="0,00" autocomplete="off" aria-label="Salário líquido mensal">
+    </div>
+  </section>
+
+  <!-- ===== KPIs ===== -->
+  <section class="kpis">
+    <div class="kpi" style="--c:#7c5cff">
+      <div class="k-l">Salário</div>
+      <div class="k-v" id="kpiSalario">R$ 0,00</div>
+      <div class="k-s">Renda base do mês</div>
+    </div>
+    <div class="kpi" style="--c:#f472b6">
+      <div class="k-l">Total de Gastos</div>
+      <div class="k-v" id="kpiTotal">R$ 0,00</div>
+      <div class="k-s" id="kpiTotalSub">0,0% da renda</div>
+    </div>
+    <div class="kpi" style="--c:#22d3ee">
+      <div class="k-l">Saldo Restante</div>
+      <div class="k-v" id="kpiSaldo">R$ 0,00</div>
+      <div class="k-s" id="kpiSaldoSub">Disponível no mês</div>
+    </div>
+    <div class="kpi" style="--c:#34d399">
+      <div class="k-l">Comprometido</div>
+      <div class="k-v" id="kpiComp">—</div>
+      <div class="k-s" id="kpiCompSub">da sua renda</div>
+    </div>
+  </section>
+
+  <!-- ===== REGRA 50-30-20 ===== -->
+  <section class="card">
+    <div class="card-head">
+      <h2>📊 Distribuição Ideal da Renda</h2>
+      <span class="hint">Regra 50 · 30 · 20</span>
+    </div>
+    <div class="regra" id="regra"></div>
+  </section>
+
+  <!-- ===== GASTOS + DONUT ===== -->
+  <section class="grid-main">
+    <div class="card">
+      <div class="card-head">
+        <h2>💸 Gastos do Mês</h2>
+        <button class="btn small" id="btnAdd">+ Adicionar gasto</button>
+      </div>
+      <div class="lista" id="lista"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>🍩 Composição do Orçamento</h2></div>
+      <div class="donut-wrap">
+        <div class="donut" id="donut">
+          <div class="donut-hole">
+            <span class="dh-label">Total gasto</span>
+            <strong id="donutTotal">R$ 0,00</strong>
+            <span class="dh-sub" id="donutSub">—</span>
+          </div>
+        </div>
+        <ul class="legend" id="legend"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ALERTAS ===== -->
+  <section class="card">
+    <div class="card-head"><h2>🔔 Alertas e Recomendações</h2></div>
+    <div class="health">
+      <div class="h-v"><span id="scoreVal">--</span><small>/100</small></div>
+      <div class="h-bar"><i id="scoreBar" style="width:0%"></i></div>
+      <div class="h-t">Saúde<br>Financeira</div>
+    </div>
+    <div class="alerts" id="alerts"></div>
+  </section>
+
+  <p class="foot">🔒 Seus dados ficam salvos apenas neste navegador. Use <strong>Exportar</strong> para fazer backup.</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   CONTROLE DE FINANÇAS — REGRA 50·30·20
+   ========================================================= */
+
+/* ---------- UTILITÁRIOS ---------- */
+const $  = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtBRL = v => (Number(v) || 0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+const fmtPct = (v, d = 1) => (Number(v) || 0).toLocaleString('pt-BR', { minimumFractionDigits:d, maximumFractionDigits:d }) + '%';
+const uid = () => 'c' + Math.random().toString(36).slice(2, 9);
+const num = v => Number(v) || 0;
+
+/* ---------- GRUPOS DA REGRA 50-30-20 ---------- */
+const GRUPOS = {
+  necessidades: { nome:'Necessidades Essenciais', icone:'🏠', meta:0.50, cor:'#38bdf8', tipo:'max' },
+  estilo:       { nome:'Estilo de Vida e Desejos', icone:'☕', meta:0.30, cor:'#f472b6', tipo:'max' },
+  futuro:       { nome:'Futuro e Metas',           icone:'💰', meta:0.20, cor:'#34d399', tipo:'min' }
+};
+
+/* ---------- CATEGORIAS PADRÃO ---------- */
+const CATEGORIAS_PADRAO = [
+  { id:'agua',         nome:'Água',                    icone:'💧', grupo:'necessidades' },
+  { id:'luz',          nome:'Luz',                     icone:'⚡', grupo:'necessidades' },
+  { id:'telefone',     nome:'Telefone',                icone:'📱', grupo:'necessidades' },
+  { id:'internet',     nome:'Internet',                icone:'🌐', grupo:'necessidades' },
+  { id:'aluguel',      nome:'Aluguel',                 icone:'🏠', grupo:'necessidades' },
+  { id:'cartao',       nome:'Cartão de Crédito',       icone:'💳', grupo:'necessidades' },
+  { id:'escola',       nome:'Escola',                  icone:'🎓', grupo:'necessidades' },
+  { id:'mercado',      nome:'Supermercado',            icone:'🛒', grupo:'necessidades' },
+  { id:'transporte',   nome:'Transporte',              icone:'🚌', grupo:'necessidades' },
+  { id:'imprevistos',  nome:'Imprevistos',             icone:'🚨', grupo:'necessidades' },
+  { id:'streaming',    nome:'Streaming',               icone:'🎬', grupo:'estilo' },
+  { id:'lazer',        nome:'Lazer',                   icone:'🎉', grupo:'estilo' },
+  { id:'diversos',     nome:'Diversos',                icone:'📦', grupo:'estilo' },
+  { id:'investimentos',nome:'Investimentos / Reserva', icone:'💎', grupo:'futuro' }
+];
+
+/* ---------- ESTADO ---------- */
+const STORAGE_KEY = 'controle-financas-503020-v1';
+let state = { salario: 0, itens: [] };
+const regraEls = {};
+
+function estadoInicial() {
+  return { salario: 0, itens: CATEGORIAS_PADRAO.map(c => ({ ...c, valor: 0 })) };
+}
+
+function carregar() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return estadoInicial();
+    const d = JSON.parse(raw);
+    if (!d || !Array.isArray(d.itens)) return estadoInicial();
+    return {
+      salario: num(d.salario),
+      itens: d.itens.map(i => ({
+        id: i.id || uid(),
+        nome: i.nome || 'Gasto',
+        icone: i.icone || '📌',
+        grupo: GRUPOS[i.grupo] ? i.grupo : 'necessidades',
+        valor: num(i.valor)
+      }))
+    };
+  } catch (e) { return estadoInicial(); }
+}
+
+let saveTimer;
+function salvar() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }, 250);
+}
+
+/* ---------- MÁSCARA DE MOEDA ---------- */
+function setMoney(input, v) {
+  input.value = v ? num(v).toLocaleString('pt-BR', { minimumFractionDigits:2, maximumFractionDigits:2 }) : '';
+}
+function lerDigitos(input) {
+  let d = input.value.replace(/\D/g, '').slice(0, 12);
+  const n = d ? parseInt(d, 10) / 100 : 0;
+  input.value = d ? n.toLocaleString('pt-BR', { minimumFractionDigits:2, maximumFractionDigits:2 }) : '';
+  return n;
+}
+
+/* ---------- MONTAR BARRAS DA REGRA ---------- */
+function montarRegra() {
+  const box = $('#regra');
+  box.innerHTML = '';
+  Object.entries(GRUPOS).forEach(([key, g]) => {
+    const el = document.createElement('div');
+    el.className = 'regra-item';
+    el.innerHTML = `
+      <div class="ri-head">
+        <div class="ri-name"><span>${g.icone}</span>${g.nome}</div>
+        <div class="ri-vals"><strong>R$ 0,00</strong><span class="ri-meta">meta R$ 0,00</span></div>
+      </div>
+      <div class="ri-bar"><i></i><b class="ri-tick"></b></div>
+      <div class="ri-foot">
+        <span class="ri-pct">0,0% do salário</span>
+        <span class="badge warn">Aguardando</span>
+      </div>`;
+    box.appendChild(el);
+    regraEls[key] = {
+      val:   el.querySelector('.ri-vals strong'),
+      meta:  el.querySelector('.ri-meta'),
+      bar:   el.querySelector('.ri-bar i'),
+      tick:  el.querySelector('.ri-tick'),
+      pct:   el.querySelector('.ri-pct'),
+      badge: el.querySelector('.badge')
+    };
+  });
+}
+
+/* ---------- MONTAR LISTA DE GASTOS ---------- */
+const listaEl = $('#lista');
+
+function montarLista() {
+  listaEl.innerHTML = '';
+
+  state.itens.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'exp';
+    row.innerHTML = `
+      <div class="exp-ic">${esc(item.icone)}</div>
+      <div class="exp-info">
+        <input class="exp-name" type="text" maxlength="32" spellcheck="false"
+               value="${esc(item.nome)}" aria-label="Nome do gasto">
+        <div class="exp-sub">
+          <select class="chip" data-grupo="${item.grupo}" aria-label="Grupo do gasto">
+            <option value="necessidades">Necessidades</option>
+            <option value="estilo">Estilo de Vida</option>
+            <option value="futuro">Futuro e Metas</option>
+          </select>
+          <span class="exp-pct">—</span>
+        </div>
+        <div class="exp-bar"><i></i></div>
+      </div>
+      <div class="exp-val">
+        <input class="money" type="text" inputmode="numeric" placeholder="R$ 0,00" aria-label="Valor do gasto">
+        <button class="del" type="button" title="Remover gasto">✕</button>
+      </div>`;
+
+    /* nome editável */
+    const nameIn = row.querySelector('.exp-name');
+    nameIn.addEventListener('input', () => { item.nome = nameIn.value; salvar(); });
+
+    /* grupo */
+    const sel = row.querySelector('.chip');
+    sel.value = item.grupo;
+    sel.addEventListener('change', () => {
+      item.grupo = sel.value;
+      sel.dataset.grupo = sel.value;
+      atualizar(); salvar();
+    });
+
+    /* valor */
+    const moneyIn = row.querySelector('.money');
+    setMoney(moneyIn, item.valor);
+    moneyIn.addEventListener('input', () => {
+      item.valor = lerDigitos(moneyIn);
+      atualizar(); salvar();
+    });
+
+    /* remover */
+    row.querySelector('.del').addEventListener('click', () => {
+      state.itens = state.itens.filter(i => i !== item);
+      montarLista(); atualizar(); salvar();
+    });
+
+    /* referências para atualização rápida */
+    item._el = {
+      pct: row.querySelector('.exp-pct'),
+      bar: row.querySelector('.exp-bar i')
+    };
+
+    listaEl.appendChild(row);
+  });
+}
+
+/* ---------- CÁLCULO + ATUALIZAÇÃO ---------- */
+function atualizar() {
+  const sal   = num(state.salario);
+  const total = state.itens.reduce((s, i) => s + num(i.valor), 0);
+  const saldo = sal - total;
+  const comp  = sal > 0 ? (total / sal) * 100 : 0;
+
+  /* ---- KPIs ---- */
+  $('#kpiSalario').textContent = fmtBRL(sal);
+  $('#kpiTotal').textContent   = fmtBRL(total);
+  $('#kpiTotalSub').textContent = sal > 0 ? fmtPct(comp) + ' da renda' : 'Informe o salário';
+
+  const kSaldo = $('#kpiSaldo');
+  kSaldo.textContent = fmtBRL(saldo);
+  kSaldo.style.color = saldo < -0.001 ? '#fda4af' : (saldo > 0.001 ? '#6ee7a8' : 'var(--txt)');
+  $('#kpiSaldoSub').textContent = saldo < -0.001 ? '⚠️ Déficit no mês'
+                                : saldo > 0.001 ? 'Disponível no mês'
+                                : 'Sem sobra';
+
+  $('#kpiComp').textContent = sal > 0 ? fmtPct(comp) : '—';
+  $('#kpiCompSub').textContent = sal > 0
+    ? (state.itens.filter(i => num(i.valor) > 0).length + ' gasto(s) lançado(s)')
+    : 'da sua renda';
+
+  /* ---- Percentual e barra de cada gasto ---- */
+  state.itens.forEach(i => {
+    if (!i._el) return;
+    const pct = sal > 0 ? (num(i.valor) / sal) * 100 : 0;
+    i._el.pct.textContent = sal > 0 ? fmtPct(pct) : '—';
+    i._el.bar.style.width = Math.max(0, Math.min(pct, 100)) + '%';
+    i._el.bar.style.background = GRUPOS[i.grupo].cor;
+  });
+
+  /* ---- Somas por grupo ---- */
+  const somas = { necessidades:0, estilo:0, futuro:0 };
+  state.itens.forEach(i => { somas[i.grupo] = (somas[i.grupo] || 0) + num(i.valor); });
+
+  /* ---- Barras 50-30-20 ---- */
+  Object.entries(GRUPOS).forEach(([key, g]) => {
+    const r    = regraEls[key];
+    const soma = somas[key] || 0;
+    const metaVal = sal * g.meta;
+    const metaPct = g.meta * 100;
+    const pct  = sal > 0 ? (soma / sal) * 100 : 0;
+
+    r.val.textContent  = fmtBRL(soma);
+    r.meta.textContent = 'meta ' + fmtBRL(metaVal);
+    r.pct.textContent  = sal > 0 ? fmtPct(pct) + ' do salário' : 'Informe o salário';
+    r.bar.style.width  = Math.min(pct, 100) + '%';
+    r.tick.style.left  = metaPct + '%';
+
+    let status, txt, cor;
+    if (sal <= 0) { status = 'warn'; txt = 'Aguardando'; cor = g.cor; }
+    else if (g.tipo === 'max') {
+      if (pct <= metaPct)            { status='ok';   txt='Dentro da meta';  cor='#22c55e'; }
+      else if (pct <= metaPct * 1.15){ status='warn'; txt='Atenção';         cor='#fbbf24'; }
+      else                           { status='bad';  txt='Acima da meta';   cor='#f43f5e'; }
+    } else {
+      if (pct >= metaPct)             { status='ok';   txt='Meta atingida';  cor='#22c55e'; }
+      else if (pct >= metaPct * 0.5)  { status='warn'; txt='Abaixo da meta'; cor='#fbbf24'; }
+      else                            { status='bad';  txt='Muito abaixo';   cor='#f43f5e'; }
+    }
+    r.bar.style.background = cor;
+    r.badge.className = 'badge ' + status;
+    r.badge.textContent = txt;
+  });
+
+  /* ---- DONUT ---- */
+  const partes = [
+    { v: somas.necessidades, cor: GRUPOS.necessidades.cor, nome: 'Necessidades' },
+    { v: somas.estilo,       cor: GRUPOS.estilo.cor,       nome: 'Estilo de Vida' },
+    { v: somas.futuro,       cor: GRUPOS.futuro.cor,       nome: 'Futuro e Metas' }
+  ];
+  const somaTotal = partes.reduce((s, p) => s + p.v, 0);
+  const base = Math.max(sal, somaTotal, 1);
+
+  let acc = 0; const stops = [];
+  partes.forEach(p => {
+    if (p.v <= 0) return;
+    const w = (p.v / base) * 100;
+    stops.push(`${p.cor} ${acc.toFixed(2)}% ${(acc + w).toFixed(2)}%`);
+    acc += w;
+  });
+  const sobra = Math.max(0, sal - somaTotal);
+  if (sobra > 0) {
+    const w = (sobra / base) * 100;
+    stops.push(`rgba(255,255,255,.11) ${acc.toFixed(2)}% ${(acc + w).toFixed(2)}%`);
+    acc += w;
+  }
+  if (acc < 99.9) stops.push(`rgba(255,255,255,.05) ${acc.toFixed(2)}% 100%`);
+
+  $('#donut').style.background = stops.length
+    ? `conic-gradient(from -90deg, ${stops.join(', ')})`
+    : 'conic-gradient(rgba(255,255,255,.07) 0 100%)';
+
+  $('#donutTotal').textContent = fmtBRL(total);
+  $('#donutSub').textContent   = sal > 0 ? fmtPct(comp) + ' da renda' : '—';
+
+  /* ---- LEGENDA ---- */
+  $('#legend').innerHTML =
+    partes.map(p => `
+      <li>
+        <span class="dot" style="background:${p.cor}"></span>
+        <span>${p.nome}</span>
+        <span class="l-val">${fmtBRL(p.v)}</span>
+        <span class="l-pct">${sal > 0 ? fmtPct((p.v / sal) * 100) : '—'}</span>
+      </li>`).join('') +
+    `<li>
+       <span class="dot" style="background:rgba(255,255,255,.28)"></span>
+       <span>Saldo restante</span>
+       <span class="l-val" style="color:${saldo < 0 ? '#fda4af' : 'inherit'}">${fmtBRL(saldo)}</span>
+       <span class="l-pct">${sal > 0 ? fmtPct((saldo / sal) * 100) : '—'}</span>
+     </li>`;
+
+  /* ---- SAÚDE FINANCEIRA ---- */
+  let score = 100;
+  if (sal > 0) {
+    if (total > sal)        score -= 45;
+    else if (comp > 90)     score -= 20;
+    else if (comp > 75)     score -= 10;
+
+    const pNec = (somas.necessidades / sal) * 100;
+    const pEst = (somas.estilo / sal) * 100;
+    const pFut = (somas.futuro / sal) * 100;
+
+    if (pNec > 50) score -= Math.min(25, (pNec - 50) * 0.8);
+    if (pEst > 30) score -= Math.min(25, (pEst - 30) * 0.8);
+    if (pFut < 20) score -= Math.min(25, (20 - pFut) * 0.9);
+  } else score = 0;
+  score = Math.round(Math.max(0, Math.min(100, score)));
+
+  const corScore = score >= 80 ? '#22c55e' : score >= 60 ? '#fbbf24' : '#f43f5e';
+  const sv = $('#scoreVal');
+  sv.textContent = sal > 0 ? score : '--';
+  sv.style.color = sal > 0 ? corScore : 'var(--txt-3)';
+  const sb = $('#scoreBar');
+  sb.style.width = (sal > 0 ? score : 0) + '%';
+  sb.style.background = `linear-gradient(90deg, ${corScore}88, ${corScore})`;
+
+  /* ---- ALERTAS ---- */
+  $('#alerts').innerHTML = gerarAlertas(sal, total, saldo, comp, somas)
+    .map(a => `
+      <div class="alert ${a.t}">
+        <div class="al-ic">${a.i}</div>
+        <div>
+          <div class="al-t">${a.ti}</div>
+          <div class="al-x">${a.x}</div>
+        </div>
+      </div>`).join('');
+}
+
+/* ---------- MOTOR DE ALERTAS ---------- */
+function gerarAlertas(sal, total, saldo, comp, somas) {
+  const out = [];
+
+  if (sal <= 0) {
+    out.push({ t:'info', i:'👋', ti:'Comece informando seu salário',
+      x:'Digite o valor do seu salário líquido mensal para que o app calcule as porcentagens de cada gasto e compare com a regra 50·30·20.' });
+    return out;
+  }
+
+  if (total === 0) {
+    out.push({ t:'info', i:'✍️', ti:'Lance seus gastos do mês',
+      x:'Preencha os valores ao lado. Cada campo mostra automaticamente quanto representa do seu salário.' });
+  }
+
+  /* Situação geral */
+  if (total > sal) {
+    out.push({ t:'bad', i:'🚨', ti:'Você gasta mais do que ganha',
+      x:`Os gastos somam ${fmtBRL(total)}, superando o salário em <strong>${fmtBRL(total - sal)}</strong>. É preciso cortar cerca de ${fmtPct(((total - sal) / total) * 100)} dos gastos ou aumentar a renda.` });
+  } else if (comp >= 95) {
+    out.push({ t:'warn', i:'⚠️', ti:'Orçamento no limite',
+      x:`Você comprometeu ${fmtPct(comp)} da renda. Sobram apenas ${fmtBRL(saldo)} — qualquer imprevisto pode desequilibrar o mês.` });
+  } else if (total > 0) {
+    out.push({ t:'ok', i:'✅', ti:'Você está dentro do orçamento',
+      x:`Sobram <strong>${fmtBRL(saldo)}</strong> do seu salário (${fmtPct(100 - comp)} da renda). Considere direcionar parte disso para investimentos.` });
+  }
+
+  /* Necessidades */
+  const nec = somas.necessidades || 0, est = somas.estilo || 0, fut = somas.futuro || 0;
+  const pNec = (nec / sal) * 100, pEst = (est / sal) * 100, pFut = (fut / sal) * 100;
+
+  if (nec > 0 && pNec > 50) {
+    out.push({ t: pNec > 60 ? 'bad' : 'warn', i:'🏠', ti:'Necessidades acima de 50%',
+      x:`Gastos essenciais somam ${fmtBRL(nec)} (<strong>${fmtPct(pNec)}</strong> do salário). O ideal é até ${fmtBRL(sal * 0.5)} — excesso de ${fmtBRL(nec - sal * 0.5)}.` });
+  }
+
+  if (est > 0 && pEst > 30) {
+    out.push({ t: pEst > 40 ? 'bad' : 'warn', i:'☕', ti:'Estilo de vida acima de 30%',
+      x:`Lazer, streaming e supérfluos somam ${fmtBRL(est)} (<strong>${fmtPct(pEst)}</strong>). A meta é até ${fmtBRL(sal * 0.3)} — excesso de ${fmtBRL(est - sal * 0.3)}.` });
+  }
+
+  if (pFut < 20) {
+    out.push({ t: pFut < 5 ? 'bad' : 'warn', i:'💰', ti:'Pouco destinado ao futuro',
+      x:`Você reserva ${fmtBRL(fut)} (<strong>${fmtPct(pFut)}</strong>) para investimentos/reserva. A meta é ${fmtBRL(sal * 0.2)} (20%).${fut > 0 ? ' Faltam ' + fmtBRL(sal * 0.2 - fut) + '.' : ''}` });
+  } else {
+    out.push({ t:'ok', i:'💰', ti:'Meta do futuro batida',
+      x:`Você reserva ${fmtBRL(fut)} (${fmtPct(pFut)}) para investimentos e reserva de emergência. Excelente construção de patrimônio!` });
+  }
+
+  /* Gastos individuais pesados */
+  const pesados = [...state.itens]
+    .filter(i => num(i.valor) > 0 && (num(i.valor) / sal) * 100 >= 25)
+    .sort((a, b) => b.valor - a.valor)
+    .slice(0, 3);
+
+  pesados.forEach(i => {
+    const p = (num(i.valor) / sal) * 100;
+    out.push({ t:'info', i:'🔎', ti:`${esc(i.nome)} consome ${fmtPct(p)} do salário`,
+      x:`${fmtBRL(i.valor)} por mês. Gastos acima de 25% da renda merecem renegociação, troca de fornecedor ou revisão de contrato.` });
+  });
+
+  return out;
+}
+
+/* ---------- TOAST ---------- */
+let toastTimer;
+function toast(msg, erro) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (erro ? ' err' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = 'toast'; }, 2800);
+}
+
+/* ---------- EVENTOS ---------- */
+/* Salário */
+const salIn = $('#salario');
+salIn.addEventListener('input', () => {
+  state.salario = lerDigitos(salIn);
+  atualizar(); salvar();
+});
+
+/* Adicionar gasto */
+$('#btnAdd').addEventListener('click', () => {
+  state.itens.push({ id: uid(), nome:'Novo gasto', icone:'📌', grupo:'estilo', valor:0 });
+  montarLista(); atualizar(); salvar();
+  const rows = listaEl.querySelectorAll('.exp');
+  const last = rows[rows.length - 1];
+  if (last) {
+    const inp = last.querySelector('.exp-name');
+    inp.focus(); inp.select();
+    last.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+});
+
+/* Exportar */
+$('#btnExport').addEventListener('click', () => {
+  const dados = {
+    app: 'Controle de Finanças — Regra 50·30·20',
+    versao: 1,
+    exportadoEm: new Date().toISOString(),
+    salario: state.salario,
+    itens: state.itens.map(({ id, nome, icone, grupo, valor }) => ({ id, nome, icone, grupo, valor }))
+  };
+  const blob = new Blob([JSON.stringify(dados, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `controle-financas-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  toast('✅ Dados exportados com sucesso!');
+});
+
+/* Importar */
+$('#btnImport').addEventListener('click', () => $('#fileInput').click());
+$('#fileInput').addEventListener('change', e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const d = JSON.parse(reader.result);
+      state.salario = num(d.salario);
+      state.itens = (Array.isArray(d.itens) ? d.itens : []).map(i => ({
+        id: i.id || uid(),
+        nome: i.nome || 'Gasto',
+        icone: i.icone || '📌',
+        grupo: GRUPOS[i.grupo] ? i.grupo : 'necessidades',
+        valor: num(i.valor)
+      }));
+      if (!state.itens.length) state.itens = CATEGORIAS_PADRAO.map(c => ({ ...c, valor:0 }));
+      setMoney(salIn, state.salario);
+      montarLista(); atualizar(); salvar();
+      toast('✅ Dados importados com sucesso!');
+    } catch (err) {
+      toast('❌ Arquivo JSON inválido.', true);
+    }
+  };
+  reader.readAsText(f);
+  e.target.value = '';
+});
+
+/* Limpar */
+$('#btnReset').addEventListener('click', () => {
+  if (!confirm('Tem certeza que deseja limpar todos os dados do app?')) return;
+  state = estadoInicial();
+  setMoney(salIn, 0);
+  montarLista(); atualizar(); salvar();
+  toast('🗑 Dados limpos.');
+});
+
+/* ---------- INICIALIZAÇÃO ---------- */
+(function init() {
+  state = carregar();
+  montarRegra();
+  montarLista();
+  setMoney(salIn, state.salario);
+  atualizar();
+})();
+</script>
+</body>
+</html>
